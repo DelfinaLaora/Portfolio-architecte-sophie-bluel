@@ -94,8 +94,11 @@ nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
-
-li:hover {
+nav li a {
+	color: black;
+	text-decoration: none;
+}
+nav li a:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -135,11 +138,42 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
+
+/*Ajout bouton filtres*/
+.bouton_filtre{
+	display: flex;
+	justify-content:center;
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 50px;
+}
+ .filtre {
+	display: flex;
+	align-items: center;
+	height: 37px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-right: 5px;
+	margin-left: 5px;
+	font-family: 'Syne';
+	font-size: 16px;
+	font-weight: 700;
+	color: #1D6154;
+	border: 1px  #1D6154 solid;
+	background-color: transparent;
+	border-radius: 60px;
+	white-space: nowrap;
+ }
+
+ .filtre:focus{
+	background-color: #1D6154;
+	color: white;
+ }
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -184,5 +218,61 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+#login {
+	/* display: flex;
+	flex-direction: column;
+	justify-content: center; */
+	text-align: center;
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#login h2{
+	margin-bottom: 20px;
+	text-align: center;
+}
+#login form {
+	display: flex;
+	flex-direction: column;
+	text-align: left;	
+	margin-top:30px;	
+}
+
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login label {
+	margin: 2em 0 1em 0;
+}
+.button_login{
+	width: 179px;
+	height: 36px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 30px;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+	border: 1px  #1D6154 solid;
+	background-color: #1D6154;
+	border-radius: 60px;
+}
+
+#login a {
+	margin-top: 35px;
+	text-align: center;
+	text-decoration: underline;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 500;
 }
 
