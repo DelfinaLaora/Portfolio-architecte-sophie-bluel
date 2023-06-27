@@ -8,21 +8,82 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous" referrerpolicy="no-referrer">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="gallery.js"></script>
+	<!-- <script type="module" src="login.js"></script> -->
 </head>
 <body>
+	<!-- <div class="bandeau_mode_edition">
+		<p><i class="fa-regular fa-pen-to-square"></i> Mode edition</p>
+		<button type="submit" class="publier_changement">Publier changement</button>
+	</div> -->
+
+	<!--<div class="modal">
+		<div class="content_modal">
+		  
+		   	<a href="#" class="close_modal">&#10006</a>
+		  
+		   	<div class="modal_gallery show">
+			
+				<h2>Galerie photo</h2>
+	 
+				<button class="go_form">Ajouter une photo</button>
+				<button class="delete">Supprimer la galerie</button>	
+		  	</div>
+		
+		   	<div class="modal_form">
+			
+			   	<a href="#" class="arrow_retour">&#x2190</a>
+			 	<h2>Ajout photo</h2>
+				<form action="#" method="POST" id="loginForm">
+					
+					<div class="ajout_photo">          
+						<i class="fa-regular fa-image"></i>
+						<label for="file"></label>
+						<input type="file" name="file" id="input_ajout_photo" accept="image/*" required />
+						<button  id="button_ajout_photo" required>+ Ajouter photo</button>
+						<p>jpg, png : 4mo max</p>
+					</div> 
+			   		<div class="form_photo">-->
+					 <!-- action ="" lien vers une page avec un langage js pour récupérer l'email et le mot de passe sur le serveur -->
+						<!--<label for="titre">Titre</label>
+						<input type="text" name="titre" id="titre">
+		
+						<label for="categorie">Categorie</label><br>
+						<select name="categorie" id="categorie">
+							<option value="objets"></option>
+							<option value="objets">Objets</option>
+							<option value="appartements">Appartements</option>
+							<option value="hotels">Hôtels & restaurants</option>
+						</select>
+
+						<div class="trait_deco"></div>
+
+						<button type="submit" id="valider_ajout_photo">Valider</button>     
+					</div>        
+				</form>
+			 	
+		   	</div> 
+
+		</div>
+	</div>-->
 <header>
+	
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="index.html">projets</a></li>
 			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
+			<li><a href="login.html" id="log_out">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
+
+
 <main>
 	<section id="introduction">
 		<figure>
@@ -38,7 +99,10 @@
 	
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<!-- <div class="bouton_filtre">
+		
+		<!-- <a href="#" class="modal_edit"><i class="fa-regular fa-pen-to-square"></i> modifier</a> -->
+		
+		<!-- <div class="button_filtre">
 			<button class="filtre tous">Tous</button>
 			<button class="filtre objet">Objets</button>
 			<button class="filtre appart">Appartements</button>

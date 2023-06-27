@@ -461,17 +461,29 @@ nav li a:hover {
 	/*   border: 2px solid red; */
 }
 
-label[for=categorie],
+/* label[for=categorie],
 label[for=titre] {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	font-weight: 500;
 	margin-right: 350px;
 	/*   border: 2px solid blue; */
-}
+/*}
 label[for=titre] {
 	margin-right: 380px;
+} */
+.label_categorie,
+.label_titre {
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 500;
+	margin-right: 350px;
+	  /* border: 2px solid blue;  */
 }
+.label_titre {
+	margin-right: 380px;
+} 
+
 
 .trait_deco {
 	margin-top: 15px;
