@@ -1,7 +1,8 @@
 import {genererFilter, genererWorks, isLog} from "./fonction.js";
 // Récupération des données dans l'API
-let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
-let categoryGallery = await fetch("http://localhost:5678/api/categories").then(categories => categories.json()) 
+
+let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()); /*on récupère l'API puis on l'analyse en json*/
+let categoryGallery = await fetch("http://localhost:5678/api/categories").then(categories => categories.json()); 
 // console.log(workGallery)
 
 // Gallery

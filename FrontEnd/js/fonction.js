@@ -1,7 +1,6 @@
-import {modEdit } from "./modal.js"
+import {modEdit} from "./modal.js"
 
-let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
-// let categoryGallery = await fetch("http://localhost:5678/api/categories").then(categories => categories.json()) 
+let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()); /*on récupère l'API puis on l'analyse en json*/
 // console.log(workGallery)
 
 // Création des boutons "filtre"
@@ -18,12 +17,15 @@ export async function genererFilter(categoryGallery){
     
     // Ajout listener pour les boutons "filtre"
         buttonFilter.addEventListener("click", async function(){
+
             workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
+            
             const objetFilters = workGallery.filter(function(work){
                 return work.categoryId === categoryGallery[i].id;                
             });    
             genererWorks(objetFilters);  
         });     
+
         // Ajout listener pour le bouton "Tous"
         const buttonWorks = document.querySelector(".filter");
         buttonWorks.addEventListener("click", function(){
@@ -57,8 +59,7 @@ export function genererWorks(workGallery){
 
 // Vérification connexion pour le mode edition
 export async function isLog(){  
-    // workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
-
+    
     let userId = window.localStorage.getItem("userId");
     console.log(userId)
     // Affichera le mode edition seulement si userId est différent de null
@@ -67,7 +68,7 @@ export async function isLog(){
     }
 }
 
-/*------------------Fonction modal------------------------ */
+/*------------------Fonctions modal------------------------ */
 
 // Fonction pour créer la gallery de la modal + fonction delete
 export async function editWorks(){  
@@ -102,13 +103,6 @@ export async function editWorks(){
             figcaption.innerText = "éditer";
             figure.appendChild(figcaption);
             
-
-            // const workLength = workGallery.length
-            // // console.log(workLength)/*11 */
-            // const work = workGallery
-            // // console.log(work)/*Array(11)*/
-            // const workTitle = workGallery[travaux].title
-            // // console.log(workTitle)/*titre */
             const workId = workGallery[travaux].id
             // console.log(workId)/*id */ 
             
@@ -126,18 +120,19 @@ export async function editWorks(){
                 });    
     
                 if(response.status == 204){
+                    console.log(response) 
                     // alert("Photo supprimée avec succés"); 
-                    const validMessageDelete = document.querySelector("#valid_message_delete")
-                    validMessageDelete.innerText = "Projet supprimé";
                     workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
-                    // const workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json())
-                    console.log(response)     
+                    
                     // Met à jour la gallery
                     document.querySelector(".gallery").innerHTML = "";
                     genererWorks(workGallery); 
                     // Met à jour la modal gallery
                     document.querySelector(".edit_gallery").innerHTML = "";
                     editWorks(workGallery) 
+                    
+                    const validMessageDelete = document.querySelector("#valid_message_delete")
+                    validMessageDelete.innerText = "Projet supprimé";
                     // Permet d'attendre avant de supprimer le message de réussite
                     setTimeout(() => {
                         validMessageDelete.innerHTML = "";
@@ -149,14 +144,12 @@ export async function editWorks(){
             } 
             // Evenement pour supprimer un élément 
             iconTrash.addEventListener("click", workTrash)
-            
         }   
-
     } 
     creatDeleteGalleryModal()
 }
     
-// fonction pour visualiser l'image à charger
+// Fonction pour visualiser l'image à charger
 export function previewPicture(){
     let i = 0;
     const inputFile = document.querySelector("#input_add_photo")
@@ -218,7 +211,7 @@ export function validFormFields(){
     }            
 }
 
-// fonction pour ajouter un projet           
+// Fonction pour ajouter un projet           
 export async function addFile(){
     
     let userId = window.localStorage.getItem("user");           
@@ -257,7 +250,7 @@ export async function addFile(){
 
     if(response.status == 201){
         // alert("Photo ajoutée avec succés");    
-    workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
+        workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
 
         const validMessageAjout = document.querySelector("#valid_message_ajout")
 
@@ -265,15 +258,13 @@ export async function addFile(){
         
         console.log(response)     
         // Met à jour la gallery
-        // document.querySelector(".gallery").innerHTML = "";
         genererWorks(workGallery); 
         // Met à jour la modal gallery               
         editWorks(workGallery) 
                     
         divAjoutPhoto.classList.toggle("visibility");
         picturePreview.classList.toggle("visibility");   
-        // Permet de réinitialiser le formulaire
-        // form.reset()
+        
         // Permet d'attendre avant de supprimer le message de réussite
         setTimeout(() => {
             validMessageAjout.innerHTML = "";
@@ -282,10 +273,10 @@ export async function addFile(){
         return false;
     }
     if(response.status == 400){
-        alert("erreur requête"); 
-        // Modifie l'affichage de la div preview dans la modal formulaire
+        alert("erreur requête");         
         form.reset()   
         errorCategory.innerHTML = "";
+        // Modifie l'affichage de la div preview dans la modal formulaire
         divAjoutPhoto.classList.toggle("visibility");
         picturePreview.classList.toggle("visibility");
     } 
@@ -294,3 +285,10 @@ export async function addFile(){
         form.reset() 
     } 
 }
+
+// Permet de fermer la modale en cliquant sur modalContent
+export const stopPropagation = function(event){/*Prend en parametre l'evenement */
+        event.stopPropagation()
+    /*permet d'enlever la propagation de l'evenement vers les parents qui enlèvera le problème 
+    de clic à l'interieur de la modale qui la fait se fermer */
+    }

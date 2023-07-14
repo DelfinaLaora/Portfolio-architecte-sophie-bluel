@@ -1,5 +1,6 @@
-import {editWorks, previewPicture, validFormFields, addFile} from "./fonction.js"
-let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
+import {editWorks, previewPicture, validFormFields, addFile, stopPropagation} from "./fonction.js"
+
+let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()); /*on récupère l'API puis on l'analyse en json*/
 
 export function modEdit(){ 
     const body = document.querySelector("body");
@@ -31,9 +32,9 @@ export function modEdit(){
 
     const pModeEdit2 = document.createElement("p");
     pModeEdit2.innerText = " Modifier";
-    sectionIntroFigure.appendChild(pModeEdit2)
+    sectionIntroFigure.appendChild(pModeEdit2);
 
-    const iconeEdit2 = document.createElement("i") ;
+    const iconeEdit2 = document.createElement("i");
     iconeEdit2.classList.add("fa-regular", "fa-pen-to-square");
     pModeEdit2.prepend(iconeEdit2);
     
@@ -45,20 +46,20 @@ export function modEdit(){
     pModeEdit3.innerText = " Modifier";
     articleIntro.prepend(pModeEdit3);
 
-    const iconeEdit3 = document.createElement("i") ;
+    const iconeEdit3 = document.createElement("i");
     iconeEdit3.classList.add("fa-regular", "fa-pen-to-square");
     pModeEdit3.prepend(iconeEdit3);
 
 // Mode édition 4
     // Création du lien modifié à côté du titre "Mes projets"
-    const hPortfolio = document.querySelector("#portfolio h2") ;
+    const hPortfolio = document.querySelector("#portfolio h2");
 
-    const modalEdit = document.createElement("a")   ;
+    const modalEdit = document.createElement("a");
     modalEdit.classList.add("modal_edit");
     hPortfolio.appendChild(modalEdit);
     modalEdit.innerText = " Modifier";    
 
-    const iconeEdit4 = document.createElement("i") ;
+    const iconeEdit4 = document.createElement("i");
     iconeEdit4.classList.add("fa-regular", "fa-pen-to-square");
     modalEdit.prepend(iconeEdit4);
 
@@ -69,8 +70,8 @@ export function modEdit(){
     logOut.href = "#";
 
     logOut.addEventListener("click", function(){
-        window.localStorage.removeItem("user")
-        window.localStorage.removeItem("userId")
+        window.localStorage.removeItem("user");
+        window.localStorage.removeItem("userId");
         document.location.href = "index.html";   
     })    
     
@@ -105,7 +106,7 @@ export function modEdit(){
 
     // Message de réussite  pour effacer
     const divValidMessageDelete = document.createElement("div");
-    divValidMessageDelete.id = ("div_valid_message_delete")
+    divValidMessageDelete.id = ("div_valid_message_delete");
     modalGallery.appendChild(divValidMessageDelete);
     const validMessageDelete = document.createElement("span");
     validMessageDelete.id = ("valid_message_delete");
@@ -184,7 +185,7 @@ export function modEdit(){
     // Création du texte en dessous de buttonAjoutPhoto
     const pAddPhoto = document.createElement("p");
     pAddPhoto.innerText = `jpg, png : 4mo max`;
-    divAjoutPhoto.appendChild(pAddPhoto)
+    divAjoutPhoto.appendChild(pAddPhoto);
 
     // Création 2em module Div de la prévisualisation de la photo
     const picturePreview = document.createElement("div");
@@ -192,7 +193,7 @@ export function modEdit(){
     // picturePreview.src = "#";
     // picturePreview.alt = "upload image";
     // picturePreview.id = "picture";
-    form.appendChild(picturePreview)
+    form.appendChild(picturePreview);
 
     const imagePreview = document.createElement("img");
     imagePreview.id = "image_preview";
@@ -232,7 +233,7 @@ export function modEdit(){
 
     // Création du select option pour Category
     const categorys = ["Hôtels & Restaurants", "Appartements", "Objets", ""];
-    const values = [3, 2, 1, 0]
+    const values = [3, 2, 1, 0];
     const selectCategory = document.createElement("select");
     selectCategory.name = "category";
     selectCategory.id = "category";
@@ -252,7 +253,7 @@ export function modEdit(){
 
     // Message de réussite  
     const diValidMessageAjout = document.createElement("div");
-    diValidMessageAjout.id = ("div_valid_message_ajout")
+    diValidMessageAjout.id = ("div_valid_message_ajout");
     formPhoto.appendChild(diValidMessageAjout);
     const validMessageAjout = document.createElement("span");
     validMessageAjout.id = ("valid_message_ajout");
@@ -271,13 +272,12 @@ export function modEdit(){
     buttonValidAddPhoto.innerText = "Valider";
     formPhoto.appendChild(buttonValidAddPhoto);  
     
-
-    // Création evenement pour aller dans le formulaire ajout photo
+    // Création événement pour aller dans le formulaire ajout photo
     goForm.addEventListener("click", function(){
         modalGallery.classList.toggle("show");
         modalForm.classList.toggle("show");
-        form.reset() 
-        // Permet de réinitialier le 1er module du formulaire
+        form.reset();
+        // Permet de réinitialier le 1er module du formulaire ainsi que les messages d'erreur
         divAjoutPhoto.classList.add("visibility");
         picturePreview.classList.remove("visibility");
         errorCategory.innerHTML = "";
@@ -292,13 +292,6 @@ export function modEdit(){
     modal.addEventListener("click", function(){
         modal.classList.remove("open");
     })
-
-    // Permet de fermer la modale en cliquant sur modalContent
-    const stopPropagation = function(event){/*Prend en parametre l'evenement */
-        event.stopPropagation()
-    /*permet d'enlever la propagation de l'evenement vers les parents qui enlèvera le problème 
-    de clic à l'interieur de la modale qui la fait se fermer */
-    }
 
     // Evenement sur "modifier" du Mode édition 4 à côté du titre "Mes projets" 
     modalEdit.addEventListener("click", function(){
@@ -334,10 +327,6 @@ export function modEdit(){
     arrowBack.addEventListener("click", function(){
         modalGallery.classList.toggle("show");
         modalForm.classList.toggle("show");
-        // Modifie l'affichage de la div preview dans la modal formulaire
-        form.reset()   
-        divAjoutPhoto.classList.toggle("visibility");
-        picturePreview.classList.toggle("visibility");
     })
 
     // Evenement pour visualiser la photo à télécharger

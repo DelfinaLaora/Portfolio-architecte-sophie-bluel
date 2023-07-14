@@ -1,5 +1,3 @@
-
-
 // Récupération du formulaire
 let form = document.querySelector("#loginForm");
 console.log(form)
@@ -22,7 +20,7 @@ async function getUserToken(email, password){
             "Accept": "application/json",
             "Content-Type": "application/json;charset=utf-8"
         },
-    // Users est converti en une chaine de caractère au format JSON avec stringify
+    // User est converti en une chaine de caractère au format JSON avec stringify
         body: JSON.stringify(user)
     })
 
@@ -30,17 +28,17 @@ async function getUserToken(email, password){
         let token = await response.json();
         window.localStorage.setItem("user", token.token);
         window.localStorage.setItem("userId", token.userId);
-        document.location.href = "index.html"     
+        document.location.href = "index.html";     
     }else if(response.status == 401){
         window.localStorage.removeItem("user");
-        errorSubmit.innerText = "Accés non autorisé" ;
+        errorSubmit.innerText = "Accés non autorisé";
         errorSubmit.classList.remove("valid");
         errorSubmit.classList.add("noValid")     
     }else{
         window.localStorage.removeItem("user");
         errorSubmit.innerText = "Veuillez créer un compte";
         errorSubmit.classList.remove("valid");
-        errorSubmit.classList.add("noValid")        
+        errorSubmit.classList.add("noValid");        
     }       
 // return await response.json();
 };
@@ -48,8 +46,8 @@ async function getUserToken(email, password){
 // let token = window.localStorage.getItem("users");
 
 form.addEventListener("submit", function(event){
-    event.preventDefault()
+    event.preventDefault();
     let userEmail = form.email.value;
     let userPass = form.password.value;
-    getUserToken(userEmail, userPass)
+    getUserToken(userEmail, userPass);
 })
