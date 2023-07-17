@@ -492,9 +492,9 @@ footer nav ul {
 	height: 36px;
 	padding-left: 15px;
 	padding-right: 15px;
-	margin-top: 15px;
+	margin-top: 30px;
 	margin-right: auto;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 	margin-left: auto;	
 	font-family: 'Syne';
 	font-size: 14px;
@@ -511,7 +511,6 @@ footer nav ul {
 	font-size: 14px;
 	font-weight: 400;
 	margin: auto;
-	margin-bottom: 20px;
 	border: transparent;
 	background: white;
 	color: red;

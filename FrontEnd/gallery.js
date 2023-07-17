@@ -1,6 +1,6 @@
 // Récupération des données dans l'API
-const workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
-const categoryGallery = await fetch("http://localhost:5678/api/categories").then(categories => categories.json()) 
+let workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
+let categoryGallery = await fetch("http://localhost:5678/api/categories").then(categories => categories.json()) 
 console.log(workGallery)
 
 
@@ -80,14 +80,14 @@ function isLog(){
     console.log(userId)
     // Affichera le mode edition seulement si userId est différent de null
     if (userId !== null){
-        editModEdit(workGallery);  
+        modEdit(workGallery);  
     }
 }
 
 isLog()
 
 // Création du mode édition
-function editModEdit(){    
+function modEdit(){    
     // Récupération du body
     const body = document.querySelector("body");
 
@@ -167,6 +167,7 @@ function editModEdit(){
     const modal = document.createElement("div");
     modal.classList.add("modal");
     body.appendChild(modal);
+
     // Création du contener pour la modal permettra de la fermer en cliquant dessus
     const contentModal = document.createElement("div");
     contentModal.classList.add("content_modal");
@@ -183,15 +184,27 @@ function editModEdit(){
     const titleModalGallery = document.createElement("h2");
     titleModalGallery.innerText = `Galerie photos`;
     modalGallery.appendChild(titleModalGallery);
+
     // Création de la div qui acceuillera les travaux à modifier
     const divModalGallery = document.createElement("div");
     divModalGallery.classList.add("edit_gallery");
     modalGallery.appendChild(divModalGallery);
+
+     // Message de réussite  pour effacer
+    const divValidMessageDelete = document.createElement("div");
+    divValidMessageDelete.id = ("div_valid_message_delete");
+    modalGallery.appendChild(divValidMessageDelete);
+    const validMessageDelete = document.createElement("span");
+    validMessageDelete.id = ("valid_message_delete");
+    // validMessageDelete.innerText = "Réussi";
+    divValidMessageDelete.appendChild(validMessageDelete);
+
     // Création du boutton pour aller sur le formulaire ajout photo
     const goForm = document.createElement("button");
     goForm.classList.add("go_form");
     goForm.innerText = `Ajouter une photo`;
     modalGallery.appendChild(goForm);
+
     // Création du bouton pour supprimer la gallery
     const deleteButton = document.createElement("button");/*aussi dans fonction delete */
     deleteButton.classList.add("delete");
@@ -203,8 +216,9 @@ function editModEdit(){
     // Création de la div qui accueillera le formulaire
     const modalForm = document.createElement("div");
     modalForm.classList.add("modal_form");
-    contentModal.appendChild(modalForm);        
-    // Création du titre de la modal
+    contentModal.appendChild(modalForm);     
+
+    // Création du titre de la modal formulaire
     const titleModalForm = document.createElement("h2");
     titleModalForm.innerText = `Ajout photos`;
     modalForm.appendChild(titleModalForm);
@@ -217,14 +231,17 @@ function editModEdit(){
     // form.setAttribute("url",`/upload-picture`)
     form.enctype = "multipart/form-data";
     modalForm.appendChild(form);
+
     // Création 1er module div pour télécharger la photo
     const divAjoutPhoto = document.createElement("div");
     divAjoutPhoto.classList.add("add_photo")
     form.appendChild(divAjoutPhoto);
+
     // Création de l'icone
     const iconeImage = document.createElement("i");
     iconeImage.classList.add("fa-regular", "fa-image");
     divAjoutPhoto.appendChild(iconeImage);
+
     // Création du label
     const labelFile = document.createElement("label");
     labelFile.setAttribute("for", "input_add_photo");
@@ -239,15 +256,18 @@ function editModEdit(){
     inputFile.required = "required";
     // inputFile.setAttribute("onchange", "previewPicture(this)")
     divAjoutPhoto.appendChild(inputFile);
+
     // Message erreur Fichier
     const errorFile = document.createElement("span");
     errorFile.id = "error_file";
     divAjoutPhoto.appendChild(errorFile);
+
     // Création du bouton qui se mettra au-dessus de l'input File
     const buttonAjoutPhoto = document.createElement("button");
     buttonAjoutPhoto.id = "button_add_photo";
     buttonAjoutPhoto.innerText = `+ Ajouter photo`;
     divAjoutPhoto.appendChild(buttonAjoutPhoto);
+
     // Création du texte en dessous de buttonAjoutPhoto
     const pAddPhoto = document.createElement("p");
     pAddPhoto.innerText = `jpg, png : 4mo max`;
@@ -264,19 +284,20 @@ function editModEdit(){
     const imagePreview = document.createElement("img");
     imagePreview.id = "image_preview";
     imagePreview.src = "#";
-    imagePreview.alt = "Photo à télécharger";
-    
+    imagePreview.alt = "Photo à télécharger";    
     picturePreview.appendChild(imagePreview);  
 
     // Création 3em module Div description photo
     const formPhoto = document.createElement("div");
     formPhoto.classList.add("form_photo");
     form.appendChild(formPhoto);
+
     // Création du label pour Titre
     const labelTitle = document.createElement("label");
     labelTitle.setAttribute("for", "title");
     labelTitle.innerText = "Titre";
     formPhoto.appendChild(labelTitle);
+
     // Création du input pour Titre
     const inputTitle = document.createElement("input");
     inputTitle.type = "title";
@@ -284,6 +305,7 @@ function editModEdit(){
     inputTitle.id = "title";
     inputTitle.required = "required";
     formPhoto.appendChild(inputTitle);
+
     // Création du Message erreur Titre
     const errorTitle = document.createElement("span");
     errorTitle.id = "error_title";
@@ -294,6 +316,7 @@ function editModEdit(){
     labelCategory.setAttribute("for", "category");
     labelCategory.innerText = "Category";
     formPhoto.appendChild(labelCategory);
+
     // Création du select option pour Category
     const categorys = ["Hôtels & Restaurants", "Appartements", "Objets", ""];
     const values = [3, 2, 1, 0]
@@ -308,14 +331,26 @@ function editModEdit(){
         selectCategory.options[selectCategory.options.length] = opt;        
     }            
     formPhoto.appendChild(selectCategory);
+
     // Création du Message erreur pour Category
     const errorCategory = document.createElement("span");
     errorCategory.id = "error_category";
     formPhoto.appendChild(errorCategory);
+
+    // Message de réussite  
+    const diValidMessageAjout = document.createElement("div");
+    diValidMessageAjout.id = ("div_valid_message_ajout");
+    formPhoto.appendChild(diValidMessageAjout);
+    const validMessageAjout = document.createElement("span");
+    validMessageAjout.id = ("valid_message_ajout");
+    // validMessageAjout.innerText = "Réussi";
+    diValidMessageAjout.appendChild(validMessageAjout);    
+
     // Création de ligne déco
     const divLineDeco = document.createElement("div");
     divLineDeco.classList.add("line_deco");
     formPhoto.appendChild(divLineDeco);
+
     // Création du bouton pour valider la création du nouvel objet
     const buttonValidAddPhoto = document.createElement("button");
     // buttonValidAddPhoto.type = "submit";
@@ -328,7 +363,7 @@ function editModEdit(){
         modalGallery.classList.toggle("show");
         modalForm.classList.toggle("show");
         form.reset() 
-        // Permet de réinitialier le 1er module du formulaire
+        // Permet de réinitialier le 1er module du formulaire ainsi que les messages d'erreur
         divAjoutPhoto.classList.add("visibility");
         picturePreview.classList.remove("visibility");
         errorCategory.innerHTML = "";
@@ -339,7 +374,7 @@ function editModEdit(){
 // -------- modal fermeture
     
     // Permet de fermer la modal en cliquant dessus. 
-    // A l'aide de stopPropagation on empêchera que ce clic se propage sur modal form et gallery
+    // A l'aide de stopPropagation on empêchera que ce clic se propage sur modal content
     modal.addEventListener("click", function(){
         modal.classList.remove("open");
     })
@@ -357,7 +392,8 @@ function editModEdit(){
         modalGallery.classList.add("show");
         modalForm.classList.remove("show");
     }) 
-    // contentModal.addEventListener("click", stopPropagation, genererWorks(workGallery));
+
+    // Permet de fermer la modale en cliquant sur modalContent
     contentModal.addEventListener("click", stopPropagation);
 
      // Création de la croix pour fermer la modal
@@ -384,17 +420,13 @@ function editModEdit(){
     arrowBack.addEventListener("click", function(){
         modalGallery.classList.toggle("show");
         modalForm.classList.toggle("show");
-        // Modifie l'affichage de la div preview dans la modal formulaire
-        form.reset()   
-        divAjoutPhoto.classList.toggle("visibility");
-        picturePreview.classList.toggle("visibility");
     })
     
 // -------- modal gallery
 // const workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
 
     //Création de la gallery + fonction delete
-function editWorks(workGallery){         
+function editWorks(){         
        
         document.querySelector(".edit_gallery").innerHTML = ""; 
         
@@ -423,12 +455,6 @@ function editWorks(workGallery){
             figcaption.innerText = "éditer";
             figure.appendChild(figcaption);
 
-            // const workLength = workGallery.length
-            // // console.log(workLength)/*11 */
-            // const work = workGallery
-            // // console.log(work)/*Array(11)*/
-            // const workTitle = workGallery[travaux].title
-            // // console.log(workTitle)/*titre */
             const workId = workGallery[travaux].id
             // console.log(workId)/*id */ 
             
@@ -447,16 +473,24 @@ function editWorks(workGallery){
                 });    
 
                 if(response.status == 204){
-                    alert("Photo supprimée avec succés"); 
+                    // alert("Photo supprimée avec succés"); 
                     
-                    const workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json())
+                    workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json())
                     console.log(response)     
                     // Met à jour la gallery
                     document.querySelector(".gallery").innerHTML = "";
                     genererWorks(workGallery); 
                     // Met à jour la modal gallery
                     document.querySelector(".edit_gallery").innerHTML = "";
-                    editWorks(workGallery)                     
+                    editWorks(workGallery)          
+                    
+                    const validMessageDelete = document.querySelector("#valid_message_delete")
+                    validMessageDelete.innerText = "Projet supprimé";
+                    // Permet d'attendre avant de supprimer le message de réussite
+                    setTimeout(() => {
+                        validMessageDelete.innerHTML = "";
+                    }, 1000); 
+                    return; 
                 }else{
                     alert("Echec de suppression");
                 }                    
@@ -522,9 +556,7 @@ function editWorks(workGallery){
         };      
         
         // Evenement pour appeler la fonction valider formulaire
-        buttonValidAddPhoto.addEventListener("click", function(){      
-            validFormFields();
-        });
+        buttonValidAddPhoto.addEventListener("click", validFormFields); 
         
         // fonction pour ajouter un élément
         
@@ -560,10 +592,8 @@ function editWorks(workGallery){
             })
         
             if(response.status == 201){
-                alert("Photo ajoutée avec succés");  
-               
-                const workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
-                // // workGallery.push(imageUrl, title, categoryId)
+                // alert("Photo ajoutée avec succés");                 
+                workGallery = await fetch("http://localhost:5678/api/works").then(works => works.json()) /*on récupère l'API puis on l'analyse en json*/
                 
                 console.log(response)     
                 // Met à jour la gallery
@@ -575,10 +605,23 @@ function editWorks(workGallery){
                             
                 divAjoutPhoto.classList.toggle("visibility");
                 picturePreview.classList.toggle("visibility");   
-                // Permet de réinitialiser le formulaire
-                // form.reset()
+
+                validMessageAjout.innerHTML = "Projet ajouté";
+                // Permet d'attendre avant de supprimer le message de réussite
+                setTimeout(() => {
+                    validMessageAjout.innerHTML = "";
+                }, 1000);
+
                 return false;
             }
+            if(response.status == 400){
+                alert("erreur requête");         
+                form.reset()   
+                errorCategory.innerHTML = "";
+                // Modifie l'affichage de la div preview dans la modal formulaire
+                divAjoutPhoto.classList.toggle("visibility");
+                picturePreview.classList.toggle("visibility");
+            } 
             if(response.status == 401){
                 alert("Vous n'êtes pas authorisé"); 
                 form.reset() 
