@@ -27,6 +27,7 @@ async function getUserToken(email, password){
     if (response.ok){
         let token = await response.json();
         window.localStorage.setItem("user", token.token)
+        window.localStorage.setItem("userId", token.userId)
         document.location.href = "index.html";        
     }
     else if(response.status == 401){
