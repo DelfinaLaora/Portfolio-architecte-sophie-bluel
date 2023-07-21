@@ -28,16 +28,10 @@ async function getUserToken(email, password){
         let token = await response.json();
         window.localStorage.setItem("user", token.token)
         window.localStorage.setItem("userId", token.userId)
-        document.location.href = "index.html";        
-    }
-    else if(response.status == 401){
-        window.localStorage.removeItem("user")
-        errorSubmit.innerText = "Accés non autorisé" ;
-        errorSubmit.classList.remove("valid")
-        errorSubmit.classList.add("noValid")
+        document.location.href = "index.html";  
     }else{
         window.localStorage.removeItem("user")
-        errorSubmit.innerText = "Veuillez créer un compte";
+        errorSubmit.innerText = "Erreur dans l’identifiant ou le mot de passe";
         errorSubmit.classList.remove("valid")
         errorSubmit.classList.add("noValid")
 }       
