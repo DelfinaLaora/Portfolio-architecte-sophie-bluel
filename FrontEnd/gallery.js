@@ -90,7 +90,7 @@ isLog()
 function modEdit(){    
     // Récupération du body
     const body = document.querySelector("body");
-
+    document.querySelector(".button_filter").innerHTML = "";
 // ------Création des boutons modifier
 
     // Mode édition 1
@@ -150,7 +150,6 @@ function modEdit(){
     modalEdit.prepend(iconeEdit4);
     
     // Modification du nav pour Logout
-
     const logOut = document.getElementById("log_out");
     logOut.innerText = "Logout";
     logOut.href = "#";
@@ -173,7 +172,6 @@ function modEdit(){
     contentModal.classList.add("content_modal");
     modal.appendChild(contentModal);
    
-
 // -------- modal gallery
 
     // Création de la div qui acceuillera la première modal
@@ -228,6 +226,7 @@ function modEdit(){
     // form.action = "#";    
     form.method = "POST";
     form.id = "form";
+    form.setAttribute("name", "form");
     // form.setAttribute("url",`/upload-picture`)
     form.enctype = "multipart/form-data";
     modalForm.appendChild(form);
@@ -257,7 +256,12 @@ function modEdit(){
     // inputFile.setAttribute("onchange", "previewPicture(this)")
     divAjoutPhoto.appendChild(inputFile);
 
-    // Message erreur Fichier
+     // Message erreur type Fichier
+     const errorTypeFile = document.createElement("span");
+     errorTypeFile.id = "error_type_file";
+     divAjoutPhoto.appendChild(errorTypeFile);
+
+    // Message erreur upload Fichier
     const errorFile = document.createElement("span");
     errorFile.id = "error_file";
     divAjoutPhoto.appendChild(errorFile);
@@ -308,7 +312,7 @@ function modEdit(){
 
     // Création du Message erreur Titre
     const errorTitle = document.createElement("span");
-    errorTitle.id = "error_title";
+    errorTitle.id = "error_title";   
     formPhoto.appendChild(errorTitle);
 
     // Création du label pour Category
@@ -318,9 +322,13 @@ function modEdit(){
     formPhoto.appendChild(labelCategory);
 
     // Création du select option pour Category
-    const categorys = ["Hôtels & Restaurants", "Appartements", "Objets", ""];
-    const values = [3, 2, 1, 0]
+    const categorys = ["Hôtels & Restaurants", "Appartements", "Objets"];
+    const values = [3, 2, 1];
     const selectCategory = document.createElement("select");
+    const option = document.createElement("option");
+    option.id = "opt_default";
+    option.selected = "selected";
+    selectCategory.appendChild(option);
     selectCategory.name = "category";
     selectCategory.id = "category";
     selectCategory.required = "required";
@@ -369,6 +377,7 @@ function modEdit(){
         errorCategory.innerHTML = "";
         errorTitle.innerHTML = "";
         errorFile.innerHTML = "";
+        errorTypeFile.innerHTML = "";
     })
 
 // -------- modal fermeture
@@ -379,7 +388,7 @@ function modEdit(){
         modal.classList.remove("open");
     })
 
-    // Permet de fermer la modale en cliquant sur modalContent
+    // Permet de fermer la modale en cliquant sur modal
     const stopPropagation = function(event){/*Prend en parametre l'evenement */
         event.stopPropagation()
     /*permet d'enlever la propagation de l'evenement vers les parents qui enlèvera le problème 
@@ -393,7 +402,7 @@ function modEdit(){
         modalForm.classList.remove("show");
     }) 
 
-    // Permet de fermer la modale en cliquant sur modalContent
+    // Permet que l'évènement attribué à modal ne se propage pas sur contentModal
     contentModal.addEventListener("click", stopPropagation);
 
      // Création de la croix pour fermer la modal
@@ -498,17 +507,45 @@ function editWorks(){
         }   
 
         //  Ajout de travaux    
-    
-        // fonction pour voir l'image à charger
+
+        // fonction pour voir l'image à charger        
         function previewPicture(){
             let i = 0;
-            const files = inputFile.files;                     
-            // On génère un aperçu de l'image en appelant la méthode window.URL.createObjectURL(files[i])
-            // On insère cette image dans la liste.
-            imagePreview.src = window.URL.createObjectURL(files[i]);            
+            // On récupère l'objet FileList qui contient les informations sur le fichier sélectionné       
+            let files = inputFile.files;
+           
+            for(i = 0; i < files.length; i++) {
+                if(validFileType(files[i])){     
+                    // On génère un aperçu de l'image en appelant la méthode window.URL.createObjectURL(files[i])
+                    imagePreview.src = window.URL.createObjectURL(files[i]);  
 
-            picturePreview.classList.add("visibility")  
-            divAjoutPhoto.classList.remove("visibility")   
+                    picturePreview.classList.add("visibility")  
+                    divAjoutPhoto.classList.remove("visibility")   
+                }else{
+                    errorTypeFile.innerHTML = "Veuillez télécharger une image en jpeg ou png";
+                    picturePreview.classList.remove("visibility")  
+                    divAjoutPhoto.classList.add("visibility") 
+                }  
+            }
+        }
+        // Tableau des fichiers autorisés
+        let fileTypes = [
+            'image/jpeg',
+            'image/jpg',
+            'image/png'
+        ]
+
+        // La fonction validFileType() prend un objet File en entrée puis parcourt la liste des types de 
+        // fichier autorisés pour les comparer à la propriété type du fichier
+        function validFileType(file){
+            for (let i = 0; i < fileTypes.length; i++){            
+                if(file.type === fileTypes[i]){
+                    // si le type est bien autorisé, la fonction renvoie true
+                    return true;
+                }                              
+            }
+            // sinon, elle renvoie false.
+            return false;                      
         }
             
         // Evenement pour visualiser la photo à télécharger       
@@ -517,47 +554,58 @@ function editWorks(){
         // Fonction pour afficher erreur formulaire
         function validFormFields(){ 
             // Erreur photo chargement
-            let fileError = document.forms["form"]["filename"];          
-
+            // let fileError = document.forms["form"]["filename"];          
+            let fileError = document.getElementById("input_add_photo"); 
             if(fileError.value == false){
                 errorFile.innerHTML = "Veuillez télécharger une image";
                 errorFile.classList.remove("valid");
                 errorFile.classList.add("noValid");
-            }else{
-                errorFile.innerHTML = "";
-                errorFile.classList.add("valid");
-                errorFile.classList.remove("noValid");                
             }
             // Erreur Titre
-            let titleError = document.forms["form"]["title"];          
-
+            // let titleError = document.forms["form"]["title"]; 
+            let titleError = document.getElementById("title");  
             if(titleError.value == ""){
                 errorTitle.innerHTML = "Veuillez remplir le champs titre";
                 errorTitle.classList.remove("valid");
                 errorTitle.classList.add("noValid");
-            }else{
+            }
+            // Erreur category
+            // let categoryError = document.forms["form"]["category"];          
+            let categoryError = document.getElementById("category"); 
+            if(categoryError.value == false ){                   
+                errorCategory.innerHTML = "Veuillez remplir le champs category";
+                errorCategory.classList.remove("valid");
+                errorCategory.classList.add("noValid");
+            }
+        };      
+
+        function changeValidFormFields(){
+            let fileError = document.getElementById("input_add_photo");            
+            if(fileError.value  != false){
+                    errorFile.innerHTML = "";
+                    errorFile.classList.add("valid");
+                    errorFile.classList.remove("noValid");                
+            }
+
+            let titleError = document.getElementById("title"); 
+            if(titleError.value != ""){
                 errorTitle.innerHTML = "";
                 errorTitle.classList.add("valid");
                 errorTitle.classList.remove("noValid");
             }
-            // Erreur category
-            let categoryError = document.forms["form"]["category"];          
-            // let categoryError = document.getElementById("category"); 
 
-            if((categoryError.value <= 0 ) || (categoryError.value > 3)){
-                errorCategory.innerHTML = "Veuillez remplir le champs category";
-                errorCategory.classList.remove("valid");
-                errorCategory.classList.add("noValid");
-            }else{
+            let categoryError = document.getElementById("category");             
+            if(categoryError.value != false ){                   
                 errorCategory.innerHTML = "";
                 errorCategory.classList.add("valid");
                 errorCategory.classList.remove("noValid");
-            }            
-        };      
+            }
+        };
         
         // Evenement pour appeler la fonction valider formulaire
         buttonValidAddPhoto.addEventListener("click", validFormFields); 
-        
+        contentModal.addEventListener("change", changeValidFormFields)
+
         // fonction pour ajouter un élément
         
         async function addFile(){
@@ -623,7 +671,7 @@ function editWorks(){
                 picturePreview.classList.toggle("visibility");
             } 
             if(response.status == 401){
-                alert("Vous n'êtes pas authorisé"); 
+                alert("Vous n'êtes pas authorisés"); 
                 form.reset() 
             } 
         };
@@ -636,7 +684,7 @@ function editWorks(){
         });
 }
     
-editWorks(workGallery);
+editWorks();
 
 }
 
